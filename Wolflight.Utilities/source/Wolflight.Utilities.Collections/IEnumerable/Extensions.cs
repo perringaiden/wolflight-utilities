@@ -1,5 +1,8 @@
 ﻿namespace Wolflight.Utilities.Collections.IEnumerable
 {
+    /// <summary>
+    /// Extensions for <see cref="IEnumerable{T}"/> and it's simple collection descendants.
+    /// </summary>
     public static class Extensions
     {
         /// <summary>
