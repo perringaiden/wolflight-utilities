@@ -58,6 +58,11 @@
         /// <remarks>The <typeparamref name="T"/> must override <see cref="Object.ToString"/>.</remarks>
         public static string ToCsv<T>(this IEnumerable<T> values)
         {
+            if (values.IsEmpty())
+            {
+                return "";
+            }
+
             // TODO: Escape this string so that it's not malformed.
             return string.Join(", ", values.Select((x) => x?.ToString()));
         }
