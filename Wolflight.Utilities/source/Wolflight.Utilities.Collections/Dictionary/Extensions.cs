@@ -42,17 +42,28 @@
         /// <returns>
         ///	 True if the value was removed from the set, otherwise false if the value was not found or the key did not exist.
         /// </returns>
+        /// <remarks>If the last item from a set is removed, the set will also be removed.</remarks>
+        /// <exception cref="ArgumentNullException">The <paramref name="dictionary"/> was <see langword="null"/>.</exception>
         public static bool RemoveSetValue<TKey, TValue>(this IDictionary<TKey, ISet<TValue>> dictionary, TKey key, TValue value)
         {
-            if (!dictionary.TryGetValue(key, out ISet<TValue>? items))
+            ArgumentNullException.ThrowIfNull(dictionary);
+
+            bool rc = false;
+
+            if (dictionary.TryGetValue(key, out ISet<TValue>? items))
             {
                 if (items != null)
                 {
-                    return items.Remove(value);
+                    rc = items.Remove(value);
+
+                    if (items.Count == 0)
+                    {
+                        dictionary.Remove(key);
+                    }
                 }
             }
 
-            return false;
+            return rc;
         }
 
         /// <summary>
