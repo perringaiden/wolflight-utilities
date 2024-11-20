@@ -185,7 +185,64 @@ namespace Wolflight.Utilities.Collections.Dictionary
         }
         public class RemoveSetValueMethod
         {
-            // TODO: Implement.
+
+            [Fact]
+            public void RemoveSetValueFromMultiItemSet()
+            {
+                Dictionary<string, ISet<int>> target = new()
+                {
+                    { "Giraffe", new HashSet<int>{1,2,3} }
+                };
+
+                Assert.True(target.RemoveSetValue("Giraffe", 2));
+
+                Assert.Collection(
+                    target["Giraffe"].OrderBy(item => item),
+                    item => Assert.Equal(1, item),
+                    item => Assert.Equal(3, item)
+                );
+            }
+
+            [Fact]
+            public void RemoveSetValueFromSingleItemSet()
+            {
+                Dictionary<string, ISet<int>> target = new()
+                {
+                    { "Giraffe", new HashSet<int>{2} }
+                };
+
+                Assert.True(target.RemoveSetValue("Giraffe", 2));
+
+                Assert.Empty(target);
+            }
+
+            [Fact]
+            public void RemoveSetValueFromEmptySet()
+            {
+
+                Dictionary<string, ISet<int>> target = new();
+
+                Assert.False(target.RemoveSetValue("Giraffe", 2));
+
+                Assert.Empty(target);
+            }
+
+            [Fact]
+            public void RemoveSetValueFromMissingSet()
+            {
+                ArgumentNullException ex;
+#pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
+                Dictionary<string, ISet<int>> target = null;
+#pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.
+
+#pragma warning disable CS8604 // Possible null reference argument.
+                ex = Assert.Throws<ArgumentNullException>(() => target.RemoveSetValue("Giraffe", 2));
+#pragma warning restore CS8604 // Possible null reference argument.
+
+                Assert.Equal("dictionary", ex.ParamName);
+            }
+
+
         }
 
         public class GetValuesMethod
