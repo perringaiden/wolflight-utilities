@@ -52,7 +52,7 @@ namespace Wolflight.Utilities.Collections.Dictionary
                         Assert.Equal("Giraffe", pair.Key);
 
                         Assert.Collection(
-                            pair.Value.OrderBy(value => value),
+                            pair.Value.Order(),
                                value => { Assert.Equal(4, value); },
                                value => { Assert.Equal(5, value); }
                         );
@@ -77,7 +77,7 @@ namespace Wolflight.Utilities.Collections.Dictionary
                     {
                         Assert.Equal("Elephant", pair.Key);
                         Assert.Collection(
-                            pair.Value.OrderBy(value => value),
+                            pair.Value.Order(),
                                value => { Assert.Equal(1, value); },
                                value => { Assert.Equal(2, value); }
                         );
@@ -86,7 +86,7 @@ namespace Wolflight.Utilities.Collections.Dictionary
                     {
                         Assert.Equal("Giraffe", pair.Key);
                         Assert.Collection(
-                            pair.Value.OrderBy(value => value),
+                            pair.Value.Order(),
                                value => { Assert.Equal(4, value); },
                                value => { Assert.Equal(5, value); }
                         );
@@ -94,7 +94,37 @@ namespace Wolflight.Utilities.Collections.Dictionary
                 );
             }
 
+            [Fact]
+            public void ThrowsExceptionWhenTheDictionaryIsNull()
+            {
+#pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
+                Dictionary<string, ISet<int>> target = null;
+#pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.
 
+#pragma warning disable CS8604 // Possible null reference argument.
+                Assert.Throws<ArgumentNullException>(() => target.AddSetValue("Giraffe", 1));
+#pragma warning restore CS8604 // Possible null reference argument.
+            }
+
+            [Fact]
+            public void ThrowsExceptionWhenTheKeyIsNull()
+            {
+                Dictionary<string, ISet<int>> target = new();
+
+#pragma warning disable CS8620 // Argument cannot be used for parameter due to differences in the nullability of reference types.
+                Assert.Throws<ArgumentNullException>(() => target.AddSetValue(null, 1));
+#pragma warning restore CS8620 // Argument cannot be used for parameter due to differences in the nullability of reference types.
+            }
+
+            [Fact]
+            public void ThrowsExceptionWhenTheValueIsNull()
+            {
+                Dictionary<string, ISet<string>> target = new();
+
+#pragma warning disable CS8620 // Argument cannot be used for parameter due to differences in the nullability of reference types.
+                Assert.Throws<ArgumentNullException>(() => target.AddSetValue("Giraffe", null));
+#pragma warning restore CS8620 // Argument cannot be used for parameter due to differences in the nullability of reference types.
+            }
         }
 
         public class AddSetValuesMethod
@@ -110,13 +140,13 @@ namespace Wolflight.Utilities.Collections.Dictionary
 
                 Assert.Equal("Elephant", pair.Key);
                 Assert.Collection(
-                    pair.Value.OrderBy(value => value),
+                    pair.Value.Order(),
                     value => Assert.Equal(1, value),
                     value => Assert.Equal(2, value));
             }
 
             [Fact]
-            public void AddsValueToNewKey()
+            public void AddsValuesToNewKey()
             {
                 IDictionary<string, ISet<int>> target = new Dictionary<string, ISet<int>>()
                 {
@@ -131,7 +161,7 @@ namespace Wolflight.Utilities.Collections.Dictionary
                     {
                         Assert.Equal("Elephant", pair.Key);
                         Assert.Collection(
-                            pair.Value.OrderBy(value => value),
+                            pair.Value.Order(),
                                value => { Assert.Equal(1, value); },
                                value => { Assert.Equal(2, value); }
                         );
@@ -140,7 +170,7 @@ namespace Wolflight.Utilities.Collections.Dictionary
                     {
                         Assert.Equal("Giraffe", pair.Key);
                         Assert.Collection(
-                            pair.Value.OrderBy(value => value),
+                            pair.Value.Order(),
                                value => { Assert.Equal(4, value); },
                                value => { Assert.Equal(5, value); }
                         );
@@ -149,7 +179,7 @@ namespace Wolflight.Utilities.Collections.Dictionary
             }
 
             [Fact]
-            public void AddsValueToExistingKey()
+            public void AddsValuesToExistingKey()
             {
                 IDictionary<string, ISet<int>> target = new Dictionary<string, ISet<int>>()
                 {
@@ -165,7 +195,7 @@ namespace Wolflight.Utilities.Collections.Dictionary
                     {
                         Assert.Equal("Elephant", pair.Key);
                         Assert.Collection(
-                            pair.Value.OrderBy(value => value),
+                            pair.Value.Order(),
                                value => { Assert.Equal(1, value); },
                                value => { Assert.Equal(2, value); },
                                value => { Assert.Equal(3, value); }
@@ -175,12 +205,44 @@ namespace Wolflight.Utilities.Collections.Dictionary
                     {
                         Assert.Equal("Giraffe", pair.Key);
                         Assert.Collection(
-                            pair.Value.OrderBy(value => value),
+                            pair.Value.Order(),
                                value => { Assert.Equal(4, value); },
                                value => { Assert.Equal(5, value); }
                         );
                     }
                 );
+            }
+
+            [Fact]
+            public void ThrowsExceptionWhenTheDictionaryIsNull()
+            {
+#pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
+                Dictionary<string, ISet<int>> target = null;
+#pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.
+
+#pragma warning disable CS8604 // Possible null reference argument.
+                Assert.Throws<ArgumentNullException>(() => target.AddSetValues("Giraffe", [1, 2]));
+#pragma warning restore CS8604 // Possible null reference argument.
+            }
+
+            [Fact]
+            public void ThrowsExceptionWhenTheKeyIsNull()
+            {
+                Dictionary<string, ISet<int>> target = new();
+
+#pragma warning disable CS8620 // Argument cannot be used for parameter due to differences in the nullability of reference types.
+                Assert.Throws<ArgumentNullException>(() => target.AddSetValues(null, [1, 2]));
+#pragma warning restore CS8620 // Argument cannot be used for parameter due to differences in the nullability of reference types.
+            }
+
+            [Fact]
+            public void ThrowsExceptionWhenTheValuesIsNull()
+            {
+                Dictionary<string, ISet<string>> target = new();
+
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
+                Assert.Throws<ArgumentNullException>(() => target.AddSetValues("Giraffe", null));
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
             }
         }
         public class RemoveSetValueMethod
@@ -197,7 +259,7 @@ namespace Wolflight.Utilities.Collections.Dictionary
                 Assert.True(target.RemoveSetValue("Giraffe", 2));
 
                 Assert.Collection(
-                    target["Giraffe"].OrderBy(item => item),
+                    target["Giraffe"].Order(),
                     item => Assert.Equal(1, item),
                     item => Assert.Equal(3, item)
                 );
@@ -242,20 +304,197 @@ namespace Wolflight.Utilities.Collections.Dictionary
                 Assert.Equal("dictionary", ex.ParamName);
             }
 
+            [Fact]
+            public void ThrowsExceptionWhenTheDictionaryIsNull()
+            {
+#pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
+                Dictionary<string, ISet<int>> target = null;
+#pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.
+
+#pragma warning disable CS8604 // Possible null reference argument.
+                Assert.Throws<ArgumentNullException>(() => target.RemoveSetValue("Giraffe", 1));
+#pragma warning restore CS8604 // Possible null reference argument.
+            }
+
+            [Fact]
+            public void ThrowsExceptionWhenTheKeyIsNull()
+            {
+                Dictionary<string, ISet<int>> target = new();
+
+#pragma warning disable CS8620 // Argument cannot be used for parameter due to differences in the nullability of reference types.
+                Assert.Throws<ArgumentNullException>(() => target.RemoveSetValue(null, 1));
+#pragma warning restore CS8620 // Argument cannot be used for parameter due to differences in the nullability of reference types.
+            }
+
+            [Fact]
+            public void ThrowsExceptionWhenTheValueIsNull()
+            {
+                Dictionary<string, ISet<string>> target = new();
+
+#pragma warning disable CS8620 // Argument cannot be used for parameter due to differences in the nullability of reference types.
+                Assert.Throws<ArgumentNullException>(() => target.RemoveSetValue("Giraffe", null));
+#pragma warning restore CS8620 // Argument cannot be used for parameter due to differences in the nullability of reference types.
+            }
 
         }
 
         public class GetValuesMethod
         {
-            // TODO: Implement.
+            [Fact]
+            public void RetrievesValuesFromPopulatedSet()
+            {
+                Dictionary<string, ISet<int>> target = new()
+                {
+                    {"Giraffe", new HashSet<int>{1,2} }
+                };
+
+                ISet<int>? values = target.GetValues("Giraffe");
+
+                Assert.NotNull(values);
+                Assert.Collection(
+                    values.Order(),
+                    x => Assert.Equal(1, x),
+                    x => Assert.Equal(2, x)
+                );
+            }
+
+
+            [Fact]
+            public void RetrievesValuesFromEmptyExistingSet()
+            {
+                Dictionary<string, ISet<int>> target = new()
+                {
+                    {"Giraffe", new HashSet<int>() }
+                };
+
+                ISet<int>? values = target.GetValues("Giraffe");
+
+                Assert.NotNull(values);
+                Assert.Empty(values);
+            }
+
+
+            [Fact]
+            public void RetrievesValuesFromNonExistentKey()
+            {
+                Dictionary<string, ISet<int>> target = new();
+
+                ISet<int>? values = target.GetValues("Giraffe");
+
+                Assert.NotNull(values);
+                Assert.Empty(values);
+                Assert.NotNull(target["Giraffe"]);
+            }
+
+
+            [Fact]
+            public void ThrowsExceptionWhenTheDictionaryIsNull()
+            {
+#pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
+                Dictionary<string, ISet<int>> target = null;
+#pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.
+
+#pragma warning disable CS8604 // Possible null reference argument.
+                Assert.Throws<ArgumentNullException>(() => target.GetValues("Giraffe"));
+#pragma warning restore CS8604 // Possible null reference argument.
+            }
+
+            [Fact]
+            public void ThrowsExceptionWhenTheKeyIsNull()
+            {
+                Dictionary<string, ISet<int>> target = new();
+
+#pragma warning disable CS8620 // Argument cannot be used for parameter due to differences in the nullability of reference types.
+                Assert.Throws<ArgumentNullException>(() => target.GetValues(null));
+#pragma warning restore CS8620 // Argument cannot be used for parameter due to differences in the nullability of reference types.
+            }
+
 
         }
 
         public class HasValuesMethod
+
+
+
+
         {
-            // TODO: Implement.
+
+            [Fact]
+            public void ReturnsTrueWhenValueIsFoundInExistingSet()
+            {
+                Dictionary<string, ISet<int>> target = new()
+                {
+                    {"Giraffe", new HashSet<int>{1,2} }
+                };
+
+                Assert.True(target.HasValue("Giraffe", 1));
+            }
+
+
+            [Fact]
+            public void ReturnsFalseWhenValueIsNotFoundInExistingSet()
+            {
+                Dictionary<string, ISet<int>> target = new()
+                {
+                    {"Giraffe", new HashSet<int>{2} }
+                };
+
+                Assert.False(target.HasValue("Giraffe", 1));
+            }
+
+
+            [Fact]
+            public void ReturnsFalseWhenSetDoesNotExist()
+            {
+                Dictionary<string, ISet<int>> target = new()
+                {
+                    {"Giraffe", new HashSet<int>{1,2} }
+                };
+
+                Assert.False(target.HasValue("Elephant", 1));
+            }
+
+
+            [Fact]
+            public void ReturnsFalseWhenTheValueIsNull()
+            {
+                Dictionary<string, ISet<string>> target = new()
+                {
+                    {"Giraffe", new HashSet<string>{"Neck","Legs"} }
+                };
+
+#pragma warning disable CS8620 // Argument cannot be used for parameter due to differences in the nullability of reference types.
+                Assert.False(target.HasValue("Giraffe", null));
+#pragma warning restore CS8620 // Argument cannot be used for parameter due to differences in the nullability of reference types.
+            }
+
+
+            [Fact]
+            public void ThrowsExceptionWhenTheDictionaryIsNull()
+            {
+#pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
+                Dictionary<string, ISet<int>> target = null;
+#pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.
+
+#pragma warning disable CS8604 // Possible null reference argument.
+                Assert.Throws<ArgumentNullException>(() => target.HasValue("Giraffe", 1));
+#pragma warning restore CS8604 // Possible null reference argument.
+            }
+
+            [Fact]
+            public void ThrowsExceptionWhenTheKeyIsNull()
+            {
+                Dictionary<string, ISet<int>> target = new();
+
+#pragma warning disable CS8620 // Argument cannot be used for parameter due to differences in the nullability of reference types.
+                Assert.Throws<ArgumentNullException>(() => target.HasValue(null, 1));
+#pragma warning restore CS8620 // Argument cannot be used for parameter due to differences in the nullability of reference types.
+            }
+
 
         }
 
     }
+
 }
+
