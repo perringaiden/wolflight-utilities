@@ -1,1 +1,10 @@
-﻿<Project Sdk="Microsoft.NET.Sdk" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <Title>Wolflight Utilities for System.Collections</Title>
+    <Authors>perringaiden</Authors>
+    <Description>A set of extensions and utilities to make System.Collections use simpler.</Description>
+    <PackageProjectUrl>https://github.com/perringaiden/wolflight-utilities</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/perringaiden/wolflight-utilities</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+  </PropertyGroup>
+</Project>
