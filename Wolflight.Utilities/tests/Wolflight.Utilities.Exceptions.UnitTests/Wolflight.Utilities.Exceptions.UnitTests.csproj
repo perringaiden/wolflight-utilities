@@ -1,0 +1,11 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <RootNamespace>Wolflight.Utilities.Exceptions</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\source\Wolflight.Utilities.Exceptions\Wolflight.Utilities.Exceptions.csproj" />
+  </ItemGroup>
+
+</Project>

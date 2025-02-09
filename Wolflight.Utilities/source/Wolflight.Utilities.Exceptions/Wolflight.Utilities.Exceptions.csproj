@@ -1,0 +1,11 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+      <Title>Wolflight Utilities for Exceptions</Title>
+      <Authors>perringaiden</Authors>
+      <Description>A set of utility exceptions.</Description>
+      <PackageProjectUrl>https://github.com/perringaiden/wolflight-utilities</PackageProjectUrl>
+      <RepositoryUrl>https://github.com/perringaiden/wolflight-utilities</RepositoryUrl>
+      <RepositoryType>git</RepositoryType>
+      <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    </PropertyGroup> 
+</Project>
