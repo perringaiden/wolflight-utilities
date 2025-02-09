@@ -1,0 +1,11 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <RootNamespace>Wolflight.Utilities.Testing</RootNamespace>
+  </PropertyGroup>
+  
+  <ItemGroup>
+    <ProjectReference Include="..\..\source\Wolflight.Utilities.Testing\Wolflight.Utilities.Testing.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -21,9 +21,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wolflight.Utilities.Collect
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wolflight.Utilities.Collections.UnitTests", "tests\Wolflight.Utilities.Collection.UnitTests\Wolflight.Utilities.Collections.UnitTests.csproj", "{7D43FD2D-99AB-4ADD-9A38-35EF9282C585}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wolflight.Utilities.Exceptions", "source\Wolflight.Utilities.Exceptions\Wolflight.Utilities.Exceptions.csproj", "{4821499F-219F-43CA-A37C-FE84D856AE86}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wolflight.Utilities.Exceptions", "source\Wolflight.Utilities.Exceptions\Wolflight.Utilities.Exceptions.csproj", "{4821499F-219F-43CA-A37C-FE84D856AE86}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wolflight.Utilities.Exceptions.UnitTests", "tests\Wolflight.Utilities.Exceptions.UnitTests\Wolflight.Utilities.Exceptions.UnitTests.csproj", "{09EFBCEB-1A67-4EAA-9731-FDC72A6D4B39}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wolflight.Utilities.Exceptions.UnitTests", "tests\Wolflight.Utilities.Exceptions.UnitTests\Wolflight.Utilities.Exceptions.UnitTests.csproj", "{09EFBCEB-1A67-4EAA-9731-FDC72A6D4B39}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wolflight.Utilities.Testing", "source\Wolflight.Utilities.Testing\Wolflight.Utilities.Testing.csproj", "{D7B3897E-4788-4F3E-8D7B-CA1DB5E93F2B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Woflight.Utilities.Testing.UnitTests", "tests\Woflight.Utilities.Testing.UnitTests\Woflight.Utilities.Testing.UnitTests.csproj", "{01B39BE4-9E64-4B2C-A3F8-B02798F79D83}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -47,6 +51,14 @@ Global
 		{09EFBCEB-1A67-4EAA-9731-FDC72A6D4B39}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{09EFBCEB-1A67-4EAA-9731-FDC72A6D4B39}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{09EFBCEB-1A67-4EAA-9731-FDC72A6D4B39}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D7B3897E-4788-4F3E-8D7B-CA1DB5E93F2B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D7B3897E-4788-4F3E-8D7B-CA1DB5E93F2B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D7B3897E-4788-4F3E-8D7B-CA1DB5E93F2B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D7B3897E-4788-4F3E-8D7B-CA1DB5E93F2B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{01B39BE4-9E64-4B2C-A3F8-B02798F79D83}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{01B39BE4-9E64-4B2C-A3F8-B02798F79D83}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{01B39BE4-9E64-4B2C-A3F8-B02798F79D83}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{01B39BE4-9E64-4B2C-A3F8-B02798F79D83}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -56,6 +68,8 @@ Global
 		{7D43FD2D-99AB-4ADD-9A38-35EF9282C585} = {01B5E3BF-3204-442D-9F88-3A74AD60E741}
 		{4821499F-219F-43CA-A37C-FE84D856AE86} = {0E5EAC4B-3366-4C83-A4B5-74F96B786DCE}
 		{09EFBCEB-1A67-4EAA-9731-FDC72A6D4B39} = {01B5E3BF-3204-442D-9F88-3A74AD60E741}
+		{D7B3897E-4788-4F3E-8D7B-CA1DB5E93F2B} = {0E5EAC4B-3366-4C83-A4B5-74F96B786DCE}
+		{01B39BE4-9E64-4B2C-A3F8-B02798F79D83} = {01B5E3BF-3204-442D-9F88-3A74AD60E741}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DF22368C-76F4-4298-9BDD-153CEB44DF88}

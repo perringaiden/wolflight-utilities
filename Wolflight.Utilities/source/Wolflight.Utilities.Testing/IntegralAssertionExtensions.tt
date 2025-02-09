@@ -1,0 +1,292 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ output extension=".cs" #>
+
+<# GenerateOutput(); #>
+
+<#+
+
+string Indent = "    ";
+
+void GenerateOutput()
+{
+	WriteLine("using Xunit;");
+	WriteLine("");
+	WriteLine("namespace Wolflight.Utilities.Testing");
+	WriteLine("{");
+	PushIndent(Indent);
+
+	WriteLine("public static class IntegralAssertionExtensions");
+	WriteLine("{");
+	
+	GenerateSignedSection("int");
+
+	WriteLine("");
+	WriteLine("");
+
+	GenerateSignedSection("short");
+
+	WriteLine("");
+	WriteLine("");
+
+	GenerateSignedSection("long");
+
+	WriteLine("");
+	WriteLine("");
+	
+	GenerateUnsignedSection("byte");
+
+	WriteLine("");
+	WriteLine("");
+	
+	GenerateUnsignedSection("uint");
+
+	WriteLine("");
+	WriteLine("");
+
+	GenerateUnsignedSection("ushort");
+
+	WriteLine("");
+	WriteLine("");
+
+	GenerateUnsignedSection("ulong");
+
+	WriteLine("}");
+
+	WriteLine("");
+	PopIndent();
+	WriteLine("}");
+}
+
+void WriteSummary(string summary, params (string Name, string Value)[] parameters)
+{
+	WriteLine("/// <summary>");
+	WriteLine($"/// {summary}");
+	WriteLine("/// </summary>");
+
+	foreach ((string Name, string Value) param in parameters)
+	{
+		WriteLine($"/// <param name=\"{param.Name}\">{param.Value}</param>");
+	}
+}
+
+
+void GenerateSignedSection(string typeName)
+{
+	
+	PushIndent(Indent);
+	WriteLine($"#region {typeName}");
+	WriteLine("");
+
+	WriteSummary("Asserts that a value is zero.", ("actual", "The value to check."));
+	WriteLine($"public static void AssertZero(this {typeName} actual)");
+	WriteLine("{");
+	PushIndent(Indent);
+	WriteLine("Assert.Equal(0, actual);");
+	PopIndent();
+	WriteLine("}");
+	WriteLine("");
+	WriteLine("");
+
+	WriteSummary("Asserts that a value is not zero.", ("actual", "The value to check."));
+	WriteLine($"public static void AssertNonZero(this {typeName} actual)");
+	WriteLine("{");
+	PushIndent(Indent);
+	WriteLine("Assert.NotEqual(0, actual);");
+	PopIndent();
+	WriteLine("}");
+	WriteLine("");
+	WriteLine("");
+
+	WriteSummary("Asserts that a value is positive.", ("actual", "The value to check."));
+	WriteLine($"public static void AssertPositive(this {typeName} actual)");
+	WriteLine("{");
+	PushIndent(Indent);
+	WriteLine($"Assert.InRange(actual, 1, {typeName}.MaxValue);");
+	PopIndent();
+	WriteLine("}");
+	WriteLine("");
+	WriteLine("");
+
+	WriteSummary("Asserts that a value is negative.", ("actual", "The value to check."));
+	WriteLine($"public static void AssertNegative(this {typeName} actual)");
+	WriteLine("{");
+	PushIndent(Indent);
+	WriteLine($"Assert.InRange(actual, {typeName}.MinValue, -1);");
+	PopIndent();
+	WriteLine("}");
+	WriteLine("");
+	WriteLine("");
+
+	WriteSummary(
+		"Asserts that a value is less than a maximum.",
+		("actual", "The value to check."),
+		("maximum", "The value must be less than this value.")
+	);
+	WriteLine($"public static void AssertLessThan(this {typeName} actual, {typeName} maximum)");
+	WriteLine("{");
+	PushIndent(Indent);
+	WriteLine($"ArgumentOutOfRangeException.ThrowIfEqual(maximum, {typeName}.MinValue);");
+	WriteLine("");
+	WriteLine($"Assert.InRange(actual, {typeName}.MinValue, maximum - 1);");
+	PopIndent();
+	WriteLine("}");
+	WriteLine("");
+	WriteLine("");
+
+	WriteSummary(
+		"Asserts that a value is less than or equal to a maximum.",
+		("actual", "The value to check."),
+		("maximum", "The value must be less than or equal to this.")
+	);
+	WriteLine($"public static void AssertLessThanOrEqualTo(this {typeName} actual, {typeName} maximum)");
+	WriteLine("{");
+	PushIndent(Indent);
+	WriteLine($"Assert.InRange(actual, {typeName}.MinValue, maximum);");
+	PopIndent();
+	WriteLine("}");
+	WriteLine("");
+	WriteLine("");
+
+	WriteSummary(
+		"Asserts that a value is greater than a minimum.",
+		("actual", "The value to check."),
+		("minimum", "The value must be greater than this value.")
+	);
+	WriteLine($"public static void AssertGreaterThan(this {typeName} actual, {typeName} minimum)");
+	WriteLine("{");
+	PushIndent(Indent);
+	WriteLine($"ArgumentOutOfRangeException.ThrowIfEqual(minimum, {typeName}.MaxValue);");
+	WriteLine("");
+	WriteLine($"Assert.InRange(actual, minimum + 1, {typeName}.MaxValue);");
+	PopIndent();
+	WriteLine("}");
+	WriteLine("");
+	WriteLine("");
+
+	WriteSummary(
+		"Asserts that a value is greater than or equal to a minimum.",
+		("actual", "The value to check."),
+		("minimum", "The value must be greater than or equal to this value.")
+	);
+	WriteLine($"public static void AssertGreaterThanOrEqualTo(this {typeName} actual, {typeName} minimum)");
+	WriteLine("{");
+	PushIndent(Indent);
+	WriteLine($"Assert.InRange(actual, minimum, {typeName}.MaxValue);");
+	PopIndent();
+	WriteLine("}");
+	WriteLine("");
+	WriteLine("");
+
+	WriteLine("#endregion");
+	PopIndent();
+}
+
+void GenerateUnsignedSection(string typeName)
+{
+	
+	PushIndent(Indent);
+	WriteLine($"#region {typeName}");
+	WriteLine("");
+
+	WriteSummary("Asserts that a value is zero.", ("actual", "The value to check."));
+	WriteLine($"public static void AssertZero(this {typeName} actual)");
+	WriteLine("{");
+	PushIndent(Indent);
+	WriteLine($"Assert.Equal<{typeName}>(0, actual);");
+	PopIndent();
+	WriteLine("}");
+	WriteLine("");
+	WriteLine("");
+
+	WriteSummary("Asserts that a value is not zero.", ("actual", "The value to check."));
+	WriteLine($"public static void AssertNonZero(this {typeName} actual)");
+	WriteLine("{");
+	PushIndent(Indent);
+	WriteLine($"Assert.NotEqual<{typeName}>(0, actual);");
+	PopIndent();
+	WriteLine("}");
+	WriteLine("");
+	WriteLine("");
+
+	WriteSummary("Asserts that a value is positive.", ("actual", "The value to check."));
+	WriteLine($"public static void AssertPositive(this {typeName} actual)");
+	WriteLine("{");
+	PushIndent(Indent);
+	WriteLine($"Assert.InRange<{typeName}>(actual, 1, {typeName}.MaxValue);");
+	PopIndent();
+	WriteLine("}");
+	WriteLine("");
+	WriteLine("");
+
+	WriteSummary(
+		"Asserts that a value is less than a maximum.",
+		("actual", "The value to check."),
+		("maximum", "The value must be less than this value.")
+	);
+	WriteLine($"public static void AssertLessThan(this {typeName} actual, {typeName} maximum)");
+	WriteLine("{");
+	PushIndent(Indent);
+	WriteLine($"ArgumentOutOfRangeException.ThrowIfEqual<{typeName}>(maximum, 0);");
+	WriteLine("");
+	WriteLine($"Assert.InRange<{typeName}>(actual, 0, ({typeName})(maximum - 1));");
+	PopIndent();
+	WriteLine("}");
+	WriteLine("");
+	WriteLine("");
+
+	WriteSummary(
+		"Asserts that a value is less than or equal to a maximum.",
+		("actual", "The value to check."),
+		("maximum", "The value must be less than or equal to this.")
+	);
+	WriteLine($"public static void AssertLessThanOrEqualTo(this {typeName} actual, {typeName} maximum)");
+	WriteLine("{");
+	PushIndent(Indent);
+	WriteLine($"Assert.InRange<{typeName}>(actual, 0, maximum);");
+	PopIndent();
+	WriteLine("}");
+	WriteLine("");
+	WriteLine("");
+
+	WriteSummary(
+		"Asserts that a value is greater than a minimum.",
+		("actual", "The value to check."),
+		("minimum", "The value must be greater than this value.")
+	);
+	WriteLine($"public static void AssertGreaterThan(this {typeName} actual, {typeName} minimum)");
+	WriteLine("{");
+	PushIndent(Indent);
+	WriteLine($"ArgumentOutOfRangeException.ThrowIfEqual<{typeName}>(minimum, {typeName}.MaxValue);");
+	WriteLine("");
+	WriteLine($"Assert.InRange<{typeName}>(actual, ({typeName})(minimum + 1), {typeName}.MaxValue);");
+	PopIndent();
+	WriteLine("}");
+	WriteLine("");
+	WriteLine("");
+
+	WriteSummary(
+		"Asserts that a value is greater than or equal to a minimum.",
+		("actual", "The value to check."),
+		("minimum", "The value must be greater than or equal to this value.")
+	);
+	WriteLine($"public static void AssertGreaterThanOrEqualTo(this {typeName} actual, {typeName} minimum)");
+	WriteLine("{");
+	PushIndent(Indent);
+	WriteLine($"Assert.InRange<{typeName}>(actual, minimum, {typeName}.MaxValue);");
+	PopIndent();
+	WriteLine("}");
+	WriteLine("");
+	WriteLine("");
+
+	WriteLine("#endregion");
+	PopIndent();
+}
+
+
+
+
+#>
